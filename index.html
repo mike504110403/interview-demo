@@ -17,25 +17,28 @@
     </div>
 
     <div class="presentation-container">
-        <!-- Tab 導航 -->
+        <!-- 整合導航橫幅 -->
         <div class="tab-navigation">
-            <button class="tab-btn active" data-presentation="main">主簡報</button>
-            <button class="tab-btn" data-presentation="streaming">直播技術</button>
-        </div>
-
-        <!-- 導航按鈕 -->
-        <div class="navigation">
-            <button id="prevBtn" class="nav-btn" aria-label="上一頁">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <polyline points="15 18 9 12 15 6"></polyline>
-                </svg>
-            </button>
-            <span id="pageCounter" class="page-counter">1 / 26</span>
-            <button id="nextBtn" class="nav-btn" aria-label="下一頁">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <polyline points="9 18 15 12 9 6"></polyline>
-                </svg>
-            </button>
+            <!-- 左側：Tab 切換 -->
+            <div class="tab-group">
+                <button class="tab-btn active" data-presentation="main">主簡報</button>
+                <button class="tab-btn" data-presentation="streaming">直播技術</button>
+            </div>
+            
+            <!-- 右側：頁面導航 -->
+            <div class="navigation">
+                <button id="prevBtn" class="nav-btn" aria-label="上一頁">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                <span id="pageCounter" class="page-counter">1 / 26</span>
+                <button id="nextBtn" class="nav-btn" aria-label="下一頁">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <!-- 簡報內容 -->

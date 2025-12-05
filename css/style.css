@@ -97,13 +97,20 @@ body {
     right: 0;
     display: flex;
     align-items: center;
-    gap: var(--spacing-md);
+    justify-content: space-between;
     background: var(--bg-secondary);
     border-bottom: 2px solid var(--gray-700);
     padding: var(--spacing-sm) var(--spacing-md);
     z-index: 1000;
     box-shadow: var(--shadow-lg);
     height: 56px;
+}
+
+/* Tab 分組（左側） */
+.tab-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
 }
 
 .tab-btn {
@@ -181,12 +188,11 @@ body {
 /* ============================================
    導航按鈕（不擋住簡報內容）
    ============================================ */
+/* 頁面導航（右側） */
 .navigation {
     display: flex;
-    flex-direction: row;
     align-items: center;
     gap: var(--spacing-sm);
-    margin-left: auto;
 }
 
 .navigation:hover {
@@ -2073,70 +2079,45 @@ body {
         padding: 0 !important;
     }
     
-    /* 整合頂部橫幅 */
+    /* 手機橫屏：調整尺寸但保持佈局 */
     .tab-navigation {
-        position: fixed !important;
-        top: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        transform: none !important;
-        z-index: 1000 !important;
-        background: var(--bg-secondary) !important;
-        border-bottom: 1px solid var(--gray-700) !important;
-        border-radius: 0 !important;
-        padding: 0.4rem 0.5rem !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: space-between !important;
-        gap: 0.5rem !important;
-        height: 40px !important;
+        height: 44px !important;
+        padding: 0.4rem 0.6rem !important;
     }
     
-    .tab-navigation .tab-btn {
-        padding: 0.3rem 0.6rem !important;
-        font-size: 0.7rem !important;
-        flex-shrink: 0 !important;
+    .tab-group {
+        gap: 0.4rem !important;
     }
     
-    /* 導航按鈕移到頂部橫幅 */
+    .tab-btn {
+        padding: 0.35rem 0.7rem !important;
+        font-size: 0.75rem !important;
+    }
+    
     .navigation {
-        position: fixed !important;
-        top: 0 !important;
-        right: 0 !important;
-        left: auto !important;
-        bottom: auto !important;
-        transform: none !important;
-        z-index: 1001 !important;
-        background: transparent !important;
-        padding: 0.4rem 0.5rem !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 0.3rem !important;
-        height: 40px !important;
+        gap: 0.4rem !important;
     }
     
     .nav-btn {
-        width: 28px !important;
-        height: 28px !important;
-        flex-shrink: 0 !important;
+        width: 32px !important;
+        height: 32px !important;
     }
     
     .nav-btn svg {
-        width: 14px !important;
-        height: 14px !important;
+        width: 16px !important;
+        height: 16px !important;
     }
     
     .page-counter {
-        font-size: 0.65rem !important;
-        padding: 0.2rem 0.4rem !important;
-        min-width: 45px !important;
-        text-align: center !important;
+        font-size: 0.7rem !important;
+        padding: 0.25rem 0.5rem !important;
+        min-width: 50px !important;
     }
     
     /* 調整簡報容器 */
     .slides {
-        margin-top: 40px !important;
-        height: calc(100vh - 40px) !important;
+        margin-top: 44px !important;
+        height: calc(100vh - 44px) !important;
         overflow-y: auto !important;
         padding: 0.5rem !important;
     }
