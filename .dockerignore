@@ -1,0 +1,10 @@
+node_modules
+.git
+.gitignore
+README.md
+DEPLOYMENT.md
+*.md
+.DS_Store
+start.sh
+專案建置經驗分享.pdf
+
