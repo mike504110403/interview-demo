@@ -84,25 +84,26 @@ body {
     align-items: center;
     justify-content: center;
     padding: var(--spacing-lg);
+    padding-top: calc(56px + var(--spacing-lg));
 }
 
 /* ============================================
-   Tab 導航
+   整合導航橫幅（電腦版 + 手機版統一）
    ============================================ */
 .tab-navigation {
     position: fixed;
-    top: var(--spacing-md);
-    left: 50%;
-    transform: translateX(-50%);
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
-    gap: var(--spacing-xs);
-    background: rgba(30, 41, 59, 0.95);
-    backdrop-filter: blur(10px);
-    padding: var(--spacing-xs);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    align-items: center;
+    gap: var(--spacing-md);
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--gray-700);
+    padding: var(--spacing-sm) var(--spacing-md);
     z-index: 1000;
-    border: 1px solid var(--gray-700);
+    box-shadow: var(--shadow-lg);
+    height: 56px;
 }
 
 .tab-btn {
@@ -181,23 +182,11 @@ body {
    導航按鈕（不擋住簡報內容）
    ============================================ */
 .navigation {
-    position: fixed;
-    top: 50%;
-    right: var(--spacing-md);
-    transform: translateY(-50%);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: var(--spacing-sm);
-    background: rgba(30, 41, 59, 0.95);
-    backdrop-filter: blur(10px);
-    padding: var(--spacing-sm);
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
-    z-index: 1000;
-    transition: all var(--transition-base);
-    opacity: 0.8;
-    border: 1px solid var(--gray-700);
+    margin-left: auto;
 }
 
 .navigation:hover {
@@ -2008,6 +1997,453 @@ body {
     font-size: 0.875rem;
     color: var(--gray-700);
     font-weight: 600;
+}
+
+/* ============================================
+   手機橫向強制提示
+   ============================================ */
+.rotate-prompt {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-primary);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+.rotate-prompt-content {
+    text-align: center;
+    padding: var(--spacing-xl);
+}
+
+.rotate-icon {
+    font-size: 5rem;
+    margin-bottom: var(--spacing-lg);
+    animation: rotate-pulse 2s ease-in-out infinite;
+}
+
+@keyframes rotate-pulse {
+    0%, 100% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(90deg) scale(1.1);
+    }
+}
+
+.rotate-prompt h2 {
+    font-size: 2rem;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+    font-weight: 600;
+}
+
+.rotate-prompt p {
+    font-size: 1.125rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+/* 手機直向時顯示提示，橫向時隱藏 */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    .rotate-prompt {
+        display: flex;
+    }
+    
+    .presentation-container {
+        display: none;
+    }
+}
+
+/* 手機橫向時正常顯示 - 加強版 */
+@media screen and (max-width: 932px) and (orientation: landscape),
+       screen and (max-height: 430px) and (orientation: landscape) {
+    .rotate-prompt {
+        display: none;
+    }
+    
+    .presentation-container {
+        display: flex !important;
+        flex-direction: column !important;
+        height: 100vh !important;
+        padding: 0 !important;
+    }
+    
+    /* 整合頂部橫幅 */
+    .tab-navigation {
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        transform: none !important;
+        z-index: 1000 !important;
+        background: var(--bg-secondary) !important;
+        border-bottom: 1px solid var(--gray-700) !important;
+        border-radius: 0 !important;
+        padding: 0.4rem 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+        gap: 0.5rem !important;
+        height: 40px !important;
+    }
+    
+    .tab-navigation .tab-btn {
+        padding: 0.3rem 0.6rem !important;
+        font-size: 0.7rem !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* 導航按鈕移到頂部橫幅 */
+    .navigation {
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        left: auto !important;
+        bottom: auto !important;
+        transform: none !important;
+        z-index: 1001 !important;
+        background: transparent !important;
+        padding: 0.4rem 0.5rem !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 0.3rem !important;
+        height: 40px !important;
+    }
+    
+    .nav-btn {
+        width: 28px !important;
+        height: 28px !important;
+        flex-shrink: 0 !important;
+    }
+    
+    .nav-btn svg {
+        width: 14px !important;
+        height: 14px !important;
+    }
+    
+    .page-counter {
+        font-size: 0.65rem !important;
+        padding: 0.2rem 0.4rem !important;
+        min-width: 45px !important;
+        text-align: center !important;
+    }
+    
+    /* 調整簡報容器 */
+    .slides {
+        margin-top: 40px !important;
+        height: calc(100vh - 40px) !important;
+        overflow-y: auto !important;
+        padding: 0.5rem !important;
+    }
+    
+    .slide {
+        padding: 0.75rem !important;
+        height: 100% !important;
+        overflow-y: auto !important;
+        display: flex !important;
+        align-items: flex-start !important;
+    }
+    
+    .slide-content {
+        max-width: 100% !important;
+        width: 100% !important;
+        padding: 0.5rem !important;
+    }
+    
+    /* 縮小標題 */
+    .slide-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .big-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .cover .title {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .cover .subtitle {
+        font-size: 0.75rem !important;
+        margin-bottom: 0.3rem !important;
+    }
+    
+    .cover .author {
+        font-size: 0.8rem !important;
+    }
+    
+    /* 確保封面內容居中 */
+    .cover .slide-content {
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        height: 100% !important;
+    }
+    
+    /* 縮小所有文字 */
+    body {
+        font-size: 0.75rem !important;
+    }
+    
+    h3 {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    h4 {
+        font-size: 0.85rem !important;
+        margin-bottom: 0.4rem !important;
+    }
+    
+    p, li {
+        font-size: 0.7rem !important;
+        line-height: 1.3 !important;
+    }
+    
+    /* 強制所有 Grid 佈局改為單列 */
+    .features-circle,
+    .architecture-grid,
+    .requirements-grid,
+    .tech-stack,
+    .scenario-grid,
+    .cost-comparison-grid-two,
+    .saas-examples,
+    .replace-conditions,
+    .outcomes-circle,
+    .decision-comparison,
+    .benefit-grid,
+    .architecture-comparison,
+    .timeline-grid,
+    .impact-grid,
+    .mvp-principles,
+    .demo-projects,
+    .cost-comparison-grid,
+    [class*="-grid"],
+    [class*="grid-"],
+    .app-requirements {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 0.5rem !important;
+    }
+    
+    /* 表格佈局優化 */
+    .comparison-header,
+    .comparison-row,
+    .arch-table-header,
+    .arch-table-row {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr 1fr !important;
+        gap: 0.2rem !important;
+        padding: 0.25rem !important;
+        font-size: 0.6rem !important;
+    }
+    
+    .comparison-header .header-item,
+    .comparison-row .row-label,
+    .comparison-row .cell,
+    .arch-table-header .header-item,
+    .arch-table-row .row-label,
+    .arch-table-row .cell {
+        font-size: 0.6rem !important;
+        padding: 0.2rem !important;
+        line-height: 1.2 !important;
+    }
+    
+    .tech-comparison-table {
+        width: 100% !important;
+        overflow-x: auto !important;
+    }
+    
+    /* 縮小卡片間距 */
+    .feature-card,
+    .architecture-item,
+    .requirement-card,
+    .tech-category,
+    .scenario-card,
+    .cost-option,
+    .condition-item {
+        padding: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 調整表格字體 */
+    .comparison-header .header-item,
+    .comparison-row .cell,
+    .arch-table-header .header-item,
+    .arch-table-row .cell {
+        font-size: 0.65rem !important;
+    }
+    
+    /* 調整流程圖 */
+    .strategy-flow {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .strategy-arrow {
+        transform: rotate(90deg);
+        margin: 0.25rem 0;
+    }
+    
+    /* 縮小所有間距 */
+    .slide-content > * {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 隱藏或縮小裝飾性元素 */
+    .qr-code img {
+        width: 120px !important;
+        height: 120px !important;
+    }
+    
+    /* 調整按鈕 */
+    button {
+        font-size: 0.7rem !important;
+        padding: 0.4rem 0.8rem !important;
+    }
+    
+    /* 確保內容佈局正確 */
+    .slide.active {
+        display: flex !important;
+    }
+    
+    /* 強制所有可能並排的元素改為單列 */
+    .feature-card,
+    .outcome-item,
+    .requirement-card,
+    .architecture-item,
+    .tech-category,
+    .decision-item,
+    .scenario-card,
+    .cost-option,
+    .demo-card,
+    .recommendation-card,
+    .condition-item,
+    .strategy-step {
+        width: 100% !important;
+        display: block !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 調整混合方案等複雜佈局 */
+    .benefit-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .architecture-comparison {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 時間軸調整 */
+    .timeline-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 決策對比 */
+    .decision-comparison {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 影響網格 */
+    .impact-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* MVP 原則 */
+    .mvp-principles {
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 確保文字不溢出 */
+    * {
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* 隱藏過大的元素 */
+    .demo-card,
+    .cost-option {
+        max-height: none !important;
+    }
+    
+    /* 縮小特殊元素 */
+    .mvp-principle,
+    .outcome-item,
+    .recommendation-card {
+        padding: 0.5rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 調整列表 */
+    ul, ol {
+        padding-left: 1rem !important;
+        margin: 0.5rem 0 !important;
+    }
+    
+    li {
+        margin-bottom: 0.25rem !important;
+    }
+    
+    /* 確保沒有任何元素使用 flex 並排 */
+    [class*="circle"],
+    [class*="grid"],
+    [class*="comparison"] {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+    }
+    
+    /* 針對特定頁面的優化 */
+    .app-requirements > div,
+    .features-circle > div,
+    .outcomes-circle > div {
+        width: 100% !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* 確保數字序號正常顯示 */
+    .feature-number,
+    .outcome-number,
+    .challenge-number,
+    .rec-number,
+    .step-number {
+        font-size: 1rem !important;
+        width: 28px !important;
+        height: 28px !important;
+        line-height: 28px !important;
+    }
+    
+    /* 優化代碼區塊 */
+    code {
+        font-size: 0.65rem !important;
+        padding: 0.15rem 0.3rem !important;
+    }
+    
+    pre {
+        font-size: 0.65rem !important;
+        padding: 0.4rem !important;
+    }
+    
+    /* 優化圖片顯示 */
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+    
+    /* 確保橫向滾動條不出現 */
+    * {
+        max-width: 100% !important;
+    }
+    
+    .slide-content > * {
+        max-width: 100% !important;
+    }
 }
 
 /* ============================================
