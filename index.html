@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>專案建置經驗分享 - Mike Lin</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Tab 導航 -->
+        <div class="tab-navigation">
+            <button class="tab-btn active" data-presentation="main">主簡報</button>
+            <button class="tab-btn" data-presentation="streaming">直播技術</button>
+        </div>
+
+        <!-- 導航按鈕 -->
+        <div class="navigation">
+            <button id="prevBtn" class="nav-btn" aria-label="上一頁">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <span id="pageCounter" class="page-counter">1 / 26</span>
+            <button id="nextBtn" class="nav-btn" aria-label="下一頁">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
+        </div>
+
+        <!-- 簡報內容 -->
+        <div class="slides">
+            <!-- ========== 主簡報 ========== -->
+            
+            <!-- Slide 1: 封面 -->
+            <section class="slide active" data-presentation="main">
+                <div class="slide-content cover">
+                    <h1 class="title">專案建置0~1經驗</h1>
+                    <p class="subtitle">從零到一的建置經驗分享 - 技術選型、挑戰與解決方案的討論</p>
+                    <div class="author">
+                        <h2>by Mike Lin</h2>
+                        <p>建置經驗分享</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 2: 專案需求-BC -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">專案需求-BC</h2>
+                    <div class="requirements-grid">
+                        <div class="requirement-card">
+                            <div class="card-number">01</div>
+                            <h3>平台整合</h3>
+                            <p>打造支援多種金流與遊戲商串接的統一平台系統</p>
+                        </div>
+                        <div class="requirement-card">
+                            <div class="card-number">02</div>
+                            <h3>彈性活動</h3>
+                            <p>押注返水、首儲回饋、儲值回饋、福利金等多元化活動機制</p>
+                        </div>
+                        <div class="requirement-card">
+                            <div class="card-number">03</div>
+                            <h3>後台對帳</h3>
+                            <p>完整的帳務對帳與財務管理功能確保資金安全</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 3: 核心功能-BC -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">核心功能-BC</h2>
+                    <div class="features-circle">
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                            </div>
+                            <h3>用戶管理系統</h3>
+                            <p>註冊登入、身份驗證、權限管理</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect>
+                                    <polyline points="17 2 12 7 7 2"></polyline>
+                                </svg>
+                            </div>
+                            <h3>遊戲串接</h3>
+                            <p>多家遊戲商API串接、遊戲數據同步</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
+                                </svg>
+                            </div>
+                            <h3>金流串接</h3>
+                            <p>多種支付方式、充值提現、第三方金流串接</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="20" x2="18" y2="10"></line>
+                                    <line x1="12" y1="20" x2="12" y2="4"></line>
+                                    <line x1="6" y1="20" x2="6" y2="14"></line>
+                                </svg>
+                            </div>
+                            <h3>抄單對帳</h3>
+                            <p>跟單功能、策略複製、帳務對帳</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                                    <line x1="6" y1="6" x2="6" y2="6.01"></line>
+                                    <line x1="6" y1="18" x2="6" y2="18.01"></line>
+                                </svg>
+                            </div>
+                            <h3>錢包</h3>
+                            <p>資金操作、充值提現、餘額管理</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                                    <line x1="7" y1="7" x2="7" y2="7.01"></line>
+                                </svg>
+                            </div>
+                            <h3>活動</h3>
+                            <p>活動設置、返水機制、福利處理</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 4: 使用的技術棧 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">使用的技術棧</h2>
+                    <div class="tech-stack">
+                        <div class="tech-category">
+                            <h3>後端技術</h3>
+                            <ul>
+                                <li><span class="tech-badge">Go語言</span></li>
+                                <li><span class="tech-badge">微服務架構</span></li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h3>資料存儲</h3>
+                            <ul>
+                                <li><span class="tech-badge">MySQL</span></li>
+                                <li><span class="tech-badge">Redis</span></li>
+                            </ul>
+                        </div>
+                        <div class="tech-category">
+                            <h3>基礎設施</h3>
+                            <ul>
+                                <li><span class="tech-badge">AWS雲端服務</span></li>
+                                <li><span class="tech-badge">Docker容器化</span></li>
+                                <li><span class="tech-badge">GitLab CI/CD</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 5: 核心微服務架構 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">核心微服務架構</h2>
+                    <div class="architecture-grid">
+                        <div class="service-card">
+                            <h3>會員服務</h3>
+                            <p>用戶註冊、登入驗證、權限管理</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>錢包服務</h3>
+                            <p>資金操作、充值提現、餘額管理</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>流水計算</h3>
+                            <p>帳務計算、報表生成、對帳功能</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>遊戲服務</h3>
+                            <p>遊戲邏輯、狀態管理、結果計算</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>抄單系統</h3>
+                            <p>跟單功能、策略複製</p>
+                        </div>
+                        <div class="service-card">
+                            <h3>事件服務</h3>
+                            <p>活動設置、返水機制、福利處理</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 6: 過程中遇到的挑戰 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">過程中遇到的挑戰</h2>
+                    <div class="challenges-list">
+                        <div class="challenge-item">
+                            <div class="challenge-number">1</div>
+                            <div class="challenge-content">
+                                <h3>遊戲商整合問題</h3>
+                                <p>遊戲商可能突然改變API結構導致漏單，需要建立穩定的監控與容錯機制。</p>
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-number">2</div>
+                            <div class="challenge-content">
+                                <h3>版本管理與部署</h3>
+                                <p>頻繁更版需求，自架GitLab Server與CI/CD Pipeline建置挑戰。</p>
+                            </div>
+                        </div>
+                        <div class="challenge-item">
+                            <div class="challenge-number">3</div>
+                            <div class="challenge-content">
+                                <h3>開發順序問題</h3>
+                                <p>先做前台再做後台的開發順序造成後期調整困難，應該同步開發。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 7: 重新開始的優化策略 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">重新開始的優化策略</h2>
+                    <div class="optimization-list">
+                        <div class="optimization-item">
+                            <div class="opt-content">
+                                <h3>改用Kafka+多Worker架構</h3>
+                                <p>流水計算不使用MySQL SP，改用程式搭配Kafka多Worker消耗，提升處理效率。</p>
+                            </div>
+                        </div>
+                        <div class="optimization-item">
+                            <div class="opt-content">
+                                <h3>抄單系統優化</h3>
+                                <p>一次性寫入原始資料，再用多Worker消耗解析，避免解析失敗導致單問題。</p>
+                            </div>
+                        </div>
+                        <div class="optimization-item">
+                            <div class="opt-content">
+                                <h3>優先開發後台系統</h3>
+                                <p>先建置後台管理功能，減少後期調整範圍，提升開發效率。</p>
+                            </div>
+                        </div>
+                        <div class="optimization-item">
+                            <div class="opt-content">
+                                <h3>採用單一錢包模式</h3>
+                                <p>使用單一錢包而非多錢包，配合遊戲商轉帳機制趨勢，簡化架構複雜度。</p>
+                            </div>
+                        </div>
+                        <div class="optimization-item highlight">
+                            <div class="opt-content">
+                                <h3>實行MVP開發模式</h3>
+                                <p>避免過度設計，專注核心功能，減少不必要的複雜度和開發成本。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 8: 專案成果與經驗（理想版本）-->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">專案成果與經驗 - 理想狀態</h2>
+                    <div class="expectation-note">
+                        <p>這是我們在專案啟動時期待的成果...</p>
+                    </div>
+                    <div class="outcomes-circle">
+                        <div class="outcome-item ideal">
+                            <h3>技術成長</h3>
+                            <p>深入掌握分散式系統設計、微服務架構模式、高併發優化和金融級安全實作。</p>
+                        </div>
+                        <div class="outcome-item ideal">
+                            <h3>團隊協作</h3>
+                            <p>建立有效的開發流程、程式碼規範和技術文檔，提升整體開發效率和品質。</p>
+                        </div>
+                        <div class="outcome-item ideal">
+                            <h3>穩定運營</h3>
+                            <p>成功建構穩定的微服務架構，實現高併發處理能力，建立完整的資金安全保障機制。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 9: 專案成果與經驗（現實版本）-->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">專案成果與經驗 - 實際狀況</h2>
+                    <div class="reality-note">
+                        <p>但現實往往是...</p>
+                    </div>
+                    <div class="outcomes-circle">
+                        <div class="outcome-item reality">
+                            <h3>技術成長</h3>
+                            <p>過度設計，多數高效能的設計根本無需空間。</p>
+                        </div>
+                        <div class="outcome-item reality">
+                            <h3>團隊協作</h3>
+                            <p>需求變換快速，溝通成本擴大。</p>
+                        </div>
+                        <div class="outcome-item reality">
+                            <h3>穩定運營</h3>
+                            <p>產品穩定前即終止，成本沒有回收。</p>
+                        </div>
+                    </div>
+                    <div class="lesson-learned">
+                        <h3>關鍵教訓</h3>
+                        <p>理想與現實的差距，讓我們學會：專注核心、快速驗證、降低成本</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 10: 專案成果與經驗（總結版本）-->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">專案成果與經驗 - MVP思維</h2>
+                    <div class="mvp-principle">
+                        <p>從失敗中學到的核心原則</p>
+                    </div>
+                    <div class="outcomes-circle">
+                        <div class="outcome-item mvp-style">
+                            <h3>最快</h3>
+                            <p>最快速的功能demo產出。</p>
+                        </div>
+                        <div class="outcome-item mvp-style">
+                            <h3>最小</h3>
+                            <p>專案最小可行性。</p>
+                        </div>
+                        <div class="outcome-item mvp-style">
+                            <h3>最簡單</h3>
+                            <p>使用最簡單的技術棧，降低開發複雜度。</p>
+                        </div>
+                    </div>
+                    <div class="mvp-impact">
+                        <h3>這個思維帶來的改變</h3>
+                        <p>從博弈平台的教訓，到健身App的成功實踐（2天完成）</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 11: AI驅動的開發方法論 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">AI 驅動的開發方法論</h2>
+                    <div class="ai-methodology">
+                        <div class="methodology-layer">
+                            <div class="layer-badge">戰略層</div>
+                            <h3>技術選型研究</h3>
+                            <p>快速調研業界方案，分析技術優劣，縮短決策時間</p>
+                            <div class="example">例：快速完成資料庫選型對比</div>
+                        </div>
+                        <div class="methodology-layer">
+                            <div class="layer-badge">規劃層</div>
+                            <h3>需求可視化</h3>
+                            <p>自動生成流程圖、架構圖、序列圖，快速收斂需求</p>
+                            <div class="example">例：快速完成系統架構設計</div>
+                        </div>
+                        <div class="methodology-layer">
+                            <div class="layer-badge">執行層</div>
+                            <h3>模組化實作</h3>
+                            <p>AI輔助代碼生成，提高開發效率和代碼品質</p>
+                            <div class="example">例：快速完成完整CRUD模組</div>
+                        </div>
+                        <div class="methodology-layer">
+                            <div class="layer-badge">迭代層</div>
+                            <h3>快速試錯</h3>
+                            <p>降低試錯成本，快速驗證技術方案可行性</p>
+                            <div class="example">例：快速嘗試多種UI設計方案</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 12: AI技術決策案例 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">AI 加速技術決策</h2>
+                    <div class="decision-comparison">
+                        <div class="comparison-column traditional">
+                            <h3>傳統方式</h3>
+                            <div class="process-step">
+                                <div class="step-content">
+                                    <h4>查閱文檔</h4>
+                                    <p>閱讀官方文檔、技術博客</p>
+                                    <span class="time-cost">數小時</span>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-content">
+                                    <h4>編寫POC</h4>
+                                    <p>手動實現概念驗證代碼</p>
+                                    <span class="time-cost">1-2天</span>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-content">
+                                    <h4>效能測試</h4>
+                                    <p>設計測試場景、執行測試</p>
+                                    <span class="time-cost">1天</span>
+                                </div>
+                            </div>
+                            <div class="total-time bad">總計：2-3天</div>
+                        </div>
+                        <div class="comparison-arrow">→</div>
+                        <div class="comparison-column ai">
+                            <h3>AI 輔助方式</h3>
+                            <div class="process-step">
+                                <div class="step-content">
+                                    <h4>AI 對比分析</h4>
+                                    <p>快速獲取方案對比與建議</p>
+                                    <span class="time-cost">快速</span>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-content">
+                                    <h4>AI 生成POC</h4>
+                                    <p>自動生成驗證代碼</p>
+                                    <span class="time-cost">快速</span>
+                                </div>
+                            </div>
+                            <div class="process-step">
+                                <div class="step-content">
+                                    <h4>快速驗證</h4>
+                                    <p>執行測試並分析結果</p>
+                                    <span class="time-cost">快速</span>
+                                </div>
+                            </div>
+                            <div class="total-time good">總計：半天內</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 13: 健身App專案 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">專案需求-健身App</h2>
+                    <div class="app-intro">
+                        <p class="app-description">做一個可以「訓練前設定計劃、訓練時紀錄、訓練後查看趨勢」的專業健身app。</p>
+                        <div class="qr-section">
+                            <div class="qr-code">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://apps.apple.com/tw/app/workitout-%E5%81%A5%E8%BA%AB%E8%A8%93%E7%B7%B4%E8%A8%98%E9%8C%84/id6754325448" alt="WorkitOut App Store QR Code">
+                                <p class="qr-label">掃描下載 WorkitOut</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 14: 健身App技術棧 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">使用的技術棧-健身App</h2>
+                    <div class="tech-stack">
+                        <div class="tech-category">
+                            <h3>開發語言</h3>
+                            <span class="tech-badge large">Swift</span>
+                        </div>
+                        <div class="tech-category">
+                            <h3>資料存儲</h3>
+                            <span class="tech-badge large">Core Data, Firebase</span>
+                        </div>
+                        <div class="tech-category highlight">
+                            <h3>AI輔助開發</h3>
+                            <span class="tech-badge large primary">Cursor</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 15: 健身App核心功能 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">核心功能-健身App</h2>
+                    <div class="features-circle">
+                        <div class="feature-item">
+                            <h3>訓練記錄</h3>
+                            <p>新增訓練項目、記錄組數重量、計時功能</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>數據分析</h3>
+                            <p>訓練容量圖表、個人記錄統計、成長趨勢</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>個人檔案</h3>
+                            <p>數據記錄、訓練偏好設定、模板/動作系統</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>計劃排程</h3>
+                            <p>週期化訓練計畫、提醒通知、目標設定</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 16: 健身App成果 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">專案成果與經驗-健身App</h2>
+                    <div class="outcomes-circle">
+                        <div class="outcome-item highlight">
+                            <h3>最快</h3>
+                            <p>總開發用時兩天，並在一週內送審通過並上線。</p>
+                        </div>
+                        <div class="outcome-item highlight">
+                            <h3>最簡單</h3>
+                            <p>使用少的技術棧。</p>
+                        </div>
+                        <div class="outcome-item highlight">
+                            <h3>最小</h3>
+                            <p>只專注在核心需求。</p>
+                        </div>
+                    </div>
+                    <div class="mvp-highlight">
+                        <h3>MVP 開發模式的完美實踐</h3>
+                        <p>透過 AI 輔助在短時間內完成</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 17: 應用到直播平台 -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content">
+                    <h2 class="slide-title">這些經驗如何應用到直播平台？</h2>
+                    <div class="application-grid">
+                        <div class="application-card">
+                            <h3>外包專案接手</h3>
+                            <p>外包項目接回後需要快速理解架構、找出問題、重新優化。</p>
+                            <div class="solution">
+                                <strong>解決方案：</strong>用 AI 快速分析代碼、生成架構文檔、識別技術債
+                            </div>
+                        </div>
+                        <div class="application-card">
+                            <h3>直播技術快速驗證</h3>
+                            <p>互動式直播涉及 WebRTC、HLS、CDN 等複雜技術，需要快速驗證方案可行性。</p>
+                            <div class="solution">
+                                <strong>解決方案：</strong>用 AI 輔助快速搭建 MVP，快速迭代
+                            </div>
+                        </div>
+                        <div class="application-card">
+                            <h3>成本效益平衡</h3>
+                            <p>在技術選型時需要考慮長期成本，找到性價比最優方案。</p>
+                            <div class="solution">
+                                <strong>解決方案：</strong>用 AI 快速對比不同方案成本
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 18: 感謝聆聽（主簡報結束） -->
+            <section class="slide" data-presentation="main">
+                <div class="slide-content center">
+                    <h1 class="big-title">感謝聆聽</h1>
+                    <p class="subtitle">期待與您進一步交流技術架構設計與團隊管理的實踐經驗</p>
+                </div>
+            </section>
+
+            <!-- ========== 直播技術簡報 ========== -->
+            
+            <!-- Slide 19: 直播技術深度-封面 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content cover">
+                    <h1 class="title">直播平台技術方案</h1>
+                    <p class="subtitle">互動式直播的技術選型、架構設計與成本分析</p>
+                    <div class="author">
+                        <h2>by Mike Lin</h2>
+                        <p>技術深度分享</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 20: 直播技術對比 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content">
+                    <h2 class="slide-title">直播技術方案對比</h2>
+                    <div class="tech-comparison-table">
+                        <div class="comparison-header">
+                            <div class="header-item"></div>
+                            <div class="header-item">RTMP</div>
+                            <div class="header-item">HLS</div>
+                            <div class="header-item highlight">WebRTC</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="row-label">延遲</div>
+                            <div class="cell">3-5秒</div>
+                            <div class="cell">10-30秒</div>
+                            <div class="cell highlight">< 500ms</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="row-label">適用場景</div>
+                            <div class="cell">傳統直播</div>
+                            <div class="cell">點播、大規模觀看</div>
+                            <div class="cell highlight">互動式直播</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="row-label">技術複雜度</div>
+                            <div class="cell">低</div>
+                            <div class="cell">低</div>
+                            <div class="cell highlight">高</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="row-label">頻寬成本</div>
+                            <div class="cell">中</div>
+                            <div class="cell">低（CDN加速）</div>
+                            <div class="cell highlight">高</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="row-label">運營成本</div>
+                            <div class="cell">中</div>
+                            <div class="cell">低</div>
+                            <div class="cell highlight">很高</div>
+                        </div>
+                        <div class="comparison-row">
+                            <div class="row-label">客戶端支援</div>
+                            <div class="cell">需要插件</div>
+                            <div class="cell">原生支援</div>
+                            <div class="cell highlight">瀏覽器原生</div>
+                        </div>
+                    </div>
+                    <div class="recommendation">
+                        <h3>關鍵問題</h3>
+                        <p>WebRTC 延遲低、互動性強，但<strong>成本極高</strong>。如何在保證互動體驗的同時控制成本？</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 21: 混合方案 - 降低成本的關鍵 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content">
+                    <h2 class="slide-title">混合方案 - 降低成本的關鍵</h2>
+                    <div class="hybrid-solution">
+                        <div class="solution-concept">
+                            <h3>核心思維：按需使用 WebRTC</h3>
+                            <p>根據不同場景選擇不同技術，在成本與體驗間取得平衡</p>
+                        </div>
+                        <div class="scenario-grid">
+                            <div class="scenario-card highlight">
+                                <h3>場景一：主播連麥/PK</h3>
+                                <div class="tech-choice">
+                                    <span class="tech-label">使用技術：</span>
+                                    <span class="tech-value">WebRTC</span>
+                                </div>
+                                <div class="reason">
+                                    <h4>為什麼？</h4>
+                                    <ul>
+                                        <li>需要極低延遲（< 500ms）</li>
+                                        <li>主播之間需要即時互動</li>
+                                        <li>連麥人數少（2-4人）</li>
+                                    </ul>
+                                </div>
+                                <div class="implementation">
+                                    <h4>實現方式</h4>
+                                    <p>主播之間 WebRTC 點對點，服務端混流後推送給觀眾</p>
+                                </div>
+                            </div>
+                            <div class="scenario-card">
+                                <h3>場景二：觀眾觀看</h3>
+                                <div class="tech-choice">
+                                    <span class="tech-label">使用技術：</span>
+                                    <span class="tech-value">HLS / RTMP</span>
+                                </div>
+                                <div class="reason">
+                                    <h4>為什麼？</h4>
+                                    <ul>
+                                        <li>觀眾數量大（數千到數萬）</li>
+                                        <li>可接受3-5秒延遲</li>
+                                        <li>成本低（CDN加速）</li>
+                                    </ul>
+                                </div>
+                                <div class="implementation">
+                                    <h4>實現方式</h4>
+                                    <p>混流後的畫面推送到 CDN，觀眾通過 HLS 觀看</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 22: WebRTC 架構對比 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content">
+                    <h2 class="slide-title">WebRTC 架構選型：P2P vs MCU vs SFU</h2>
+                    <div class="webrtc-arch-table">
+                        <div class="arch-table-header">
+                            <div class="header-item"></div>
+                            <div class="header-item">P2P<br>點對點</div>
+                            <div class="header-item">MCU<br>混流服務器</div>
+                            <div class="header-item highlight">SFU<br>選擇性轉發</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">運作方式</div>
+                            <div class="cell">主播直接互連</div>
+                            <div class="cell">服務器混流後分發</div>
+                            <div class="cell highlight">服務器轉發流</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">主播上行</div>
+                            <div class="cell bad">推N-1路流</div>
+                            <div class="cell good">推1路流</div>
+                            <div class="cell good">推1路流</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">主播下行</div>
+                            <div class="cell bad">收N-1路流</div>
+                            <div class="cell good">收1路混合流</div>
+                            <div class="cell neutral">收N-1路獨立流</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">服務器負載</div>
+                            <div class="cell good">無服務器</div>
+                            <div class="cell bad">極高（編解碼）</div>
+                            <div class="cell good">低（僅轉發）</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">延遲</div>
+                            <div class="cell good">最低</div>
+                            <div class="cell neutral">中等</div>
+                            <div class="cell good">極低</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">畫面同步</div>
+                            <div class="cell good">天然同步</div>
+                            <div class="cell good">完美同步</div>
+                            <div class="cell bad">需客戶端對齊</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">擴展性</div>
+                            <div class="cell bad">差（3人以上困難）</div>
+                            <div class="cell neutral">中等</div>
+                            <div class="cell good">好</div>
+                        </div>
+                        <div class="arch-table-row">
+                            <div class="row-label">適用場景</div>
+                            <div class="cell">2人視頻通話</div>
+                            <div class="cell">小規模視頻會議</div>
+                            <div class="cell highlight">多人連麥直播</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 23: 技術選型成本分析 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content">
+                    <h2 class="slide-title">技術選型：自建 vs SaaS 雲服務</h2>
+                    <div class="cost-analysis">
+                        <div class="cost-comparison-grid-two">
+                            <div class="cost-option">
+                                <h3>自建 WebRTC</h3>
+                                <div class="cost-breakdown">
+                                    <div class="cost-item">
+                                        <span class="cost-label">開發週期</span>
+                                        <span class="cost-value">數月</span>
+                                    </div>
+                                    <div class="cost-item">
+                                        <span class="cost-label">技術門檻</span>
+                                        <span class="cost-value">高</span>
+                                    </div>
+                                    <div class="cost-item">
+                                        <span class="cost-label">初期投入</span>
+                                        <span class="cost-value">高</span>
+                                    </div>
+                                    <div class="cost-item">
+                                        <span class="cost-label">維護成本</span>
+                                        <span class="cost-value">持續高</span>
+                                    </div>
+                                    <div class="cost-total">
+                                        <span class="cost-label">長期成本</span>
+                                        <span class="cost-value good">可控</span>
+                                    </div>
+                                </div>
+                                <div class="when-use">
+                                    <h4>適合場景</h4>
+                                    <p>規模大、需求特殊、長期運營</p>
+                                </div>
+                            </div>
+                            <div class="cost-option highlight">
+                                <h3>SaaS 雲服務（Agora）</h3>
+                                <div class="cost-breakdown">
+                                    <div class="cost-item">
+                                        <span class="cost-label">開發週期</span>
+                                        <span class="cost-value">數天</span>
+                                    </div>
+                                    <div class="cost-item">
+                                        <span class="cost-label">技術門檻</span>
+                                        <span class="cost-value">低</span>
+                                    </div>
+                                    <div class="cost-item">
+                                        <span class="cost-label">初期投入</span>
+                                        <span class="cost-value">極低</span>
+                                    </div>
+                                    <div class="cost-item">
+                                        <span class="cost-label">維護成本</span>
+                                        <span class="cost-value">極低</span>
+                                    </div>
+                                    <div class="cost-total">
+                                        <span class="cost-label">長期成本</span>
+                                        <span class="cost-value bad">很高（按量）</span>
+                                    </div>
+                                </div>
+                                <div class="when-use">
+                                    <h4>適合場景</h4>
+                                    <p>快速驗證、初期規模小、需求標準</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 24: 我的Demo專案展示 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content">
+                    <h2 class="slide-title">實戰經驗：我的Demo專案</h2>
+                    <div class="demo-projects">
+                        <div class="demo-card">
+                            <h3>WebRTC Demo</h3>
+                            <div class="demo-description">
+                                <p><strong>技術棧：</strong>Go + Pion WebRTC + Vue 3</p>
+                                <p><strong>架構：</strong>SFU架構、WebSocket信令服務</p>
+                            </div>
+                            <div class="demo-features">
+                                <h4>核心功能</h4>
+                                <ul>
+                                    <li>SFU 服務器實現</li>
+                                    <li>主播推流</li>
+                                    <li>觀眾訂閱（1對N）</li>
+                                    <li>音視頻流轉發</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="demo-card">
+                            <h3>Stream Demo</h3>
+                            <div class="demo-description">
+                                <p><strong>技術棧：</strong>Go + Nginx-RTMP + HLS + PostgreSQL</p>
+                                <p><strong>架構：</strong>完整的微服務架構</p>
+                            </div>
+                            <div class="demo-features">
+                                <h4>核心功能</h4>
+                                <ul>
+                                    <li>RTMP推流 + HLS播放</li>
+                                    <li>FFmpeg自動轉碼</li>
+                                    <li>直播間管理</li>
+                                    <li>聊天室系統</li>
+                                    <li>影片點播</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 25: 外包專案接手策略 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content">
+                    <h2 class="slide-title">外包專案接手：評估優於重做</h2>
+                    <div class="evaluation-content">
+                        <div class="project-status">
+                            <h3>現況理解</h3>
+                            <ul class="status-list">
+                                <li>色情網站：原外包開發，已接回自維護</li>
+                                <li>互動式直播平台：外包開發中，對接回來中</li>
+                            </ul>
+                        </div>
+                        <div class="evaluation-strategy">
+                            <h3>正確的接手策略</h3>
+                            <div class="strategy-flow">
+                                <div class="strategy-step">
+                                    <div class="step-number">1</div>
+                                    <div class="step-content">
+                                        <h4>技術棧評估</h4>
+                                        <ul>
+                                            <li>後端語言和框架</li>
+                                            <li>數據庫選型</li>
+                                            <li>前端技術棧</li>
+                                            <li>代碼質量和架構</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="strategy-arrow">→</div>
+                                <div class="strategy-step">
+                                    <div class="step-number">2</div>
+                                    <div class="step-content">
+                                        <h4>雲服務評估</h4>
+                                        <ul>
+                                            <li>用哪家雲服務？</li>
+                                            <li>中國雲服務的限制</li>
+                                            <li>跨境網絡穩定性</li>
+                                            <li>切換成本評估</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="strategy-arrow">→</div>
+                                <div class="strategy-step">
+                                    <div class="step-number">3</div>
+                                    <div class="step-content">
+                                        <h4>第三方服務評估</h4>
+                                        <ul>
+                                            <li>音視頻服務商</li>
+                                            <li>成本是否過高？</li>
+                                            <li>耦合度是否太深？</li>
+                                            <li>有無替代方案？</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="when-to-replace">
+                            <h3>什麼情況下才考慮替換？</h3>
+                            <div class="replace-conditions">
+                                <div class="condition-item bad">
+                                    <h4>成本過高</h4>
+                                    <p>第三方服務費用過高，自建或換服務商更划算</p>
+                                </div>
+                                <div class="condition-item bad">
+                                    <h4>限制太多</h4>
+                                    <p>功能受限、API限制多，無法滿足業務需求</p>
+                                </div>
+                                <div class="condition-item bad">
+                                    <h4>地域問題</h4>
+                                    <p>中國雲服務跨境慢、協議不穩定、需要複雜備案</p>
+                                </div>
+                                <div class="condition-item bad">
+                                    <h4>技術債嚴重</h4>
+                                    <p>代碼質量差、耦合太深、維護成本極高</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Slide 26: 感謝聆聽 -->
+            <section class="slide" data-presentation="streaming">
+                <div class="slide-content center">
+                    <h1 class="big-title">感謝聆聽</h1>
+                    <p class="subtitle">期待與您深入討論直播平台的技術方案</p>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

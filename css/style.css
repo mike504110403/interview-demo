@@ -1,0 +1,2139 @@
+/* ============================================
+   全域樣式與變數
+   ============================================ */
+:root {
+    /* 主色系 - 深藍專業色調 */
+    --primary-color: #2563EB;
+    --primary-light: #3B82F6;
+    --primary-dark: #1E40AF;
+    --secondary-color: #475569;
+    
+    /* 灰階 - 深色系 */
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-300: #CBD5E1;
+    --gray-400: #94A3B8;
+    --gray-500: #64748B;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1E293B;
+    --gray-900: #0F172A;
+    
+    /* 背景色 */
+    --bg-primary: #0F172A;
+    --bg-secondary: #1E293B;
+    --bg-tertiary: #334155;
+    
+    /* 功能色 */
+    --success-color: #059669;
+    --warning-color: #D97706;
+    --error-color: #DC2626;
+    --info-color: #2563EB;
+    
+    /* 間距 */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+    --spacing-2xl: 4rem;
+    
+    /* 圓角 */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+    --radius-xl: 1rem;
+    
+    /* 陰影 */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    
+    /* 動畫 */
+    --transition-fast: 150ms ease-in-out;
+    --transition-base: 250ms ease-in-out;
+    --transition-slow: 350ms ease-in-out;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC', 'Microsoft JhengHei', 
+                 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--gray-100);
+    background: var(--bg-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ============================================
+   簡報容器
+   ============================================ */
+.presentation-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-lg);
+}
+
+/* ============================================
+   Tab 導航
+   ============================================ */
+.tab-navigation {
+    position: fixed;
+    top: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: var(--spacing-xs);
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    border: 1px solid var(--gray-700);
+}
+
+.tab-btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: transparent;
+    border: 2px solid transparent;
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-400);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.tab-btn:hover {
+    color: var(--gray-200);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.slides {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    aspect-ratio: 16 / 9;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    border: 1px solid var(--gray-700);
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100px);
+    transition: all var(--transition-base);
+    padding: var(--spacing-2xl);
+    overflow-y: auto;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.slide.prev {
+    transform: translateX(-100px);
+}
+
+.slide-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.slide-content.center {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* ============================================
+   導航按鈕（不擋住簡報內容）
+   ============================================ */
+.navigation {
+    position: fixed;
+    top: 50%;
+    right: var(--spacing-md);
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+    background: rgba(30, 41, 59, 0.95);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transition: all var(--transition-base);
+    opacity: 0.8;
+    border: 1px solid var(--gray-700);
+}
+
+.navigation:hover {
+    opacity: 1;
+    background: rgba(30, 41, 59, 1);
+}
+
+.nav-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.nav-btn:hover {
+    background: var(--primary-light);
+    transform: scale(1.1);
+}
+
+.nav-btn:active {
+    transform: scale(0.95);
+}
+
+.nav-btn:disabled {
+    background: var(--gray-700);
+    cursor: not-allowed;
+    transform: scale(1);
+}
+
+.page-counter {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--gray-300);
+    text-align: center;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    padding: var(--spacing-sm) 0;
+}
+
+/* ============================================
+   封面頁樣式
+   ============================================ */
+.slide-content.cover {
+    justify-content: center;
+    background: var(--bg-primary);
+    color: white;
+    text-align: center;
+    border: 2px solid var(--gray-800);
+}
+
+.cover .title {
+    font-size: 4rem;
+    font-weight: 800;
+    margin-bottom: var(--spacing-lg);
+    line-height: 1.2;
+    color: var(--gray-50);
+}
+
+.cover .subtitle {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: var(--spacing-2xl);
+    color: var(--gray-300);
+}
+
+.cover .author {
+    margin-top: var(--spacing-xl);
+}
+
+.cover .author h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-200);
+}
+
+.cover .author p {
+    font-size: 1.125rem;
+    color: var(--gray-400);
+}
+
+/* ============================================
+   頁面標題
+   ============================================ */
+.slide-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-xl);
+    padding-bottom: var(--spacing-md);
+    border-bottom: 3px solid var(--primary-color);
+}
+
+/* ============================================
+   需求卡片（Slide 2）
+   ============================================ */
+.requirements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.requirement-card {
+    background: var(--bg-tertiary);
+    color: var(--gray-100);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    border: 1px solid var(--gray-700);
+}
+
+.requirement-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    background: var(--gray-700);
+    border-color: var(--primary-color);
+}
+
+.card-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--gray-600);
+    margin-bottom: var(--spacing-sm);
+}
+
+.requirement-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-50);
+}
+
+.requirement-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--gray-300);
+}
+
+/* ============================================
+   功能圓環（Slide 3）
+   ============================================ */
+.features-circle {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+}
+
+.feature-item {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    transition: all var(--transition-base);
+    border: 2px solid var(--gray-700);
+}
+
+.feature-item:hover {
+    background: var(--gray-700);
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.feature-icon {
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-color);
+}
+
+.feature-item h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.feature-item p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.5;
+}
+
+/* ============================================
+   技術棧（Slide 4）
+   ============================================ */
+.tech-stack {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.tech-category {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary-color);
+    border: 1px solid var(--gray-700);
+}
+
+.tech-category h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+}
+
+.tech-category ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.tech-badge {
+    display: inline-block;
+    background: var(--bg-secondary);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-200);
+    border: 2px solid var(--gray-600);
+    transition: all var(--transition-fast);
+}
+
+.tech-badge:hover {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.tech-badge.large {
+    font-size: 1rem;
+    padding: var(--spacing-sm) var(--spacing-lg);
+}
+
+.tech-badge.primary {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.tech-category.highlight {
+    background: var(--bg-primary);
+    color: white;
+    border-left-color: var(--primary-color);
+}
+
+.tech-category.highlight h3 {
+    color: var(--gray-50);
+}
+
+/* ============================================
+   架構圖（Slide 5）
+   ============================================ */
+.architecture-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+.service-card {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-700);
+    text-align: center;
+    transition: all var(--transition-base);
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    background: var(--gray-700);
+    border-color: var(--primary-color);
+}
+
+.service-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--gray-50);
+}
+
+.service-card p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--gray-400);
+}
+
+/* ============================================
+   挑戰列表（Slide 6）
+   ============================================ */
+.challenges-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.challenge-item {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-start;
+}
+
+.challenge-number {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.challenge-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.challenge-content p {
+    font-size: 1rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+/* ============================================
+   優化策略（Slide 7）
+   ============================================ */
+.optimization-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.optimization-item {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary-color);
+    transition: all var(--transition-base);
+    border: 1px solid var(--gray-700);
+}
+
+.optimization-item:hover {
+    background: var(--gray-700);
+    box-shadow: var(--shadow-md);
+    transform: translateX(8px);
+}
+
+.optimization-item.highlight {
+    background: var(--bg-primary);
+    border-left-color: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.opt-content h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.opt-content p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.5;
+}
+
+/* ============================================
+   成果圓環（Slide 8）
+   ============================================ */
+.outcomes-circle {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+}
+
+.outcome-item {
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    transition: all var(--transition-base);
+    border: 2px solid var(--gray-700);
+}
+
+.outcome-item:hover {
+    background: var(--gray-700);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+}
+
+.outcome-item.highlight {
+    background: var(--bg-primary);
+    border-color: var(--primary-color);
+}
+
+.outcome-item h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.outcome-item p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+/* ============================================
+   AI 方法論（Slide 11）
+   ============================================ */
+.ai-methodology {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.methodology-layer {
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary-color);
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-base);
+    border: 1px solid var(--gray-700);
+}
+
+.methodology-layer:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateX(8px);
+    background: var(--gray-700);
+}
+
+.layer-badge {
+    display: inline-block;
+    background: var(--primary-color);
+    color: white;
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: var(--spacing-sm);
+}
+
+.methodology-layer h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.methodology-layer p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+}
+
+.methodology-layer .example {
+    font-size: 0.75rem;
+    color: var(--primary-light);
+    font-style: italic;
+    background: var(--bg-primary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    margin-top: var(--spacing-sm);
+}
+
+/* ============================================
+   技術決策對比（Slide 12）
+   ============================================ */
+.decision-comparison {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--spacing-lg);
+    align-items: center;
+    margin-top: var(--spacing-xl);
+}
+
+.comparison-column {
+    padding: var(--spacing-xl);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-700);
+}
+
+.comparison-column.traditional {
+    border-color: var(--gray-600);
+}
+
+.comparison-column.ai {
+    background: var(--bg-primary);
+    border-color: var(--primary-color);
+}
+
+.comparison-column h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--gray-50);
+}
+
+.process-step {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    align-items: center;
+}
+
+.step-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-xs);
+}
+
+.step-content p {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    margin-bottom: var(--spacing-xs);
+}
+
+.time-cost {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--warning-color);
+    background: rgba(217, 119, 6, 0.15);
+    padding: 2px 8px;
+    border-radius: var(--radius-sm);
+}
+
+.total-time {
+    text-align: center;
+    font-size: 1.125rem;
+    font-weight: 700;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-top: var(--spacing-md);
+}
+
+.total-time.bad {
+    background: rgba(220, 38, 38, 0.15);
+    color: var(--error-color);
+}
+
+.total-time.good {
+    background: rgba(5, 150, 105, 0.15);
+    color: var(--success-color);
+}
+
+.comparison-arrow {
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+/* ============================================
+   應用場景（Slide 17）
+   ============================================ */
+.application-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.application-card {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--gray-700);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+}
+
+.application-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    background: var(--gray-700);
+}
+
+.application-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.application-card p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-md);
+}
+
+.solution {
+    background: var(--bg-primary);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.875rem;
+    color: var(--gray-300);
+}
+
+.solution strong {
+    color: var(--primary-light);
+}
+
+.cta-section {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-xl);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-700);
+}
+
+.cta-text {
+    font-size: 1.125rem;
+    color: var(--gray-300);
+    margin-bottom: var(--spacing-md);
+}
+
+.cta-button,
+.option-btn {
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--radius-lg);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    margin: var(--spacing-sm);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.cta-button:hover,
+.option-btn:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.option-btn.secondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+
+/* ============================================
+   直播技術對比表
+   ============================================ */
+.tech-comparison-table {
+    margin-top: var(--spacing-xl);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 2px solid var(--gray-700);
+}
+
+.comparison-header {
+    display: grid;
+    grid-template-columns: 150px repeat(3, 1fr);
+    background: var(--bg-primary);
+    font-weight: 600;
+}
+
+.header-item {
+    padding: var(--spacing-md);
+    text-align: center;
+    border-right: 1px solid var(--gray-700);
+    color: var(--gray-200);
+}
+
+.header-item.highlight {
+    background: var(--primary-color);
+    color: white;
+}
+
+.comparison-row {
+    display: grid;
+    grid-template-columns: 150px repeat(3, 1fr);
+    border-top: 1px solid var(--gray-700);
+}
+
+.row-label {
+    padding: var(--spacing-md);
+    font-weight: 600;
+    background: var(--bg-primary);
+    border-right: 1px solid var(--gray-700);
+    color: var(--gray-300);
+}
+
+.cell {
+    padding: var(--spacing-md);
+    text-align: center;
+    border-right: 1px solid var(--gray-700);
+    color: var(--gray-400);
+}
+
+.cell.highlight {
+    background: var(--bg-primary);
+    color: var(--primary-light);
+    font-weight: 600;
+}
+
+.recommendation {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--primary-color);
+    border: 1px solid var(--gray-700);
+}
+
+.recommendation h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.recommendation p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+/* ============================================
+   成本分析
+   ============================================ */
+.cost-analysis {
+    margin-top: var(--spacing-lg);
+}
+
+.saas-explanation {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 2px solid var(--primary-color);
+}
+
+.saas-explanation h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: var(--spacing-sm);
+    text-align: center;
+}
+
+.saas-explanation > p {
+    font-size: 0.875rem;
+    color: var(--gray-300);
+    line-height: 1.6;
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.saas-examples {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.saas-example {
+    background: var(--bg-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-700);
+}
+
+.saas-example h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-xs);
+}
+
+.saas-example p {
+    font-size: 0.8rem;
+    color: var(--gray-400);
+    line-height: 1.5;
+}
+
+.saas-example code {
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: var(--primary-light);
+}
+
+.when-use {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--bg-primary);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-700);
+}
+
+.when-use h4 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-200);
+    margin-bottom: var(--spacing-xs);
+}
+
+.when-use p {
+    font-size: 0.8rem;
+    color: var(--gray-400);
+}
+
+.cost-scenario {
+    text-align: center;
+    padding: var(--spacing-md);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--gray-700);
+}
+
+.cost-scenario h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-200);
+}
+
+.cost-comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.cost-comparison-grid-two {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.cost-option {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--gray-700);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-base);
+}
+
+.cost-option:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    background: var(--gray-700);
+}
+
+.cost-option.highlight {
+    border-color: var(--primary-color);
+    background: var(--bg-primary);
+}
+
+.cost-option h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--gray-700);
+}
+
+.cost-breakdown {
+    margin-bottom: var(--spacing-md);
+}
+
+.cost-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-sm) 0;
+    border-bottom: 1px solid var(--gray-700);
+}
+
+.cost-label {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+.cost-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--gray-200);
+}
+
+.cost-total {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-sm);
+    border-top: 2px solid var(--gray-600);
+}
+
+.cost-total .cost-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-200);
+}
+
+.cost-total .cost-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-light);
+}
+
+.pros-cons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+}
+
+.pros,
+.cons {
+    background: var(--bg-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-700);
+}
+
+.pros h4 {
+    color: var(--success-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.cons h4 {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+}
+
+.pros ul,
+.cons ul {
+    list-style: none;
+    font-size: 0.75rem;
+    color: var(--gray-400);
+}
+
+.pros li,
+.cons li {
+    padding: var(--spacing-xs) 0;
+}
+
+/* ============================================
+   Demo 展示
+   ============================================ */
+.demo-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
+}
+
+.demo-card {
+    background: var(--bg-tertiary);
+    border: 2px solid var(--gray-700);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    transition: all var(--transition-base);
+}
+
+.demo-card:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-8px);
+    background: var(--gray-700);
+}
+
+.demo-card h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+}
+
+.demo-description {
+    margin-bottom: var(--spacing-md);
+}
+
+.demo-description p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-xs);
+}
+
+.demo-features h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-200);
+    margin-bottom: var(--spacing-sm);
+}
+
+.demo-features ul {
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    margin-bottom: var(--spacing-md);
+}
+
+.demo-features li {
+    padding: var(--spacing-xs) 0;
+}
+
+/* ============================================
+   輔助類別
+   ============================================ */
+.big-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: var(--spacing-lg);
+    color: var(--gray-50);
+}
+
+.navigation-options {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-xl);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mvp-highlight {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+    padding: var(--spacing-xl);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-700);
+}
+
+.mvp-highlight h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.mvp-highlight p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+/* ============================================
+   專案成果三版本樣式
+   ============================================ */
+.expectation-note,
+.reality-note,
+.mvp-principle {
+    text-align: center;
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.expectation-note {
+    background: var(--bg-primary);
+    color: var(--primary-light);
+    border: 2px solid var(--primary-color);
+}
+
+.reality-note {
+    background: rgba(220, 38, 38, 0.15);
+    color: var(--error-color);
+    border: 2px solid var(--error-color);
+}
+
+.mvp-principle {
+    background: rgba(5, 150, 105, 0.15);
+    color: var(--success-color);
+    border: 2px solid var(--success-color);
+}
+
+.outcome-item.ideal {
+    background: var(--bg-primary);
+    border-color: var(--primary-color);
+}
+
+.outcome-item.reality {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: var(--error-color);
+}
+
+.outcome-item.mvp-style {
+    background: rgba(5, 150, 105, 0.1);
+    border-color: var(--success-color);
+}
+
+.lesson-learned,
+.mvp-impact {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border-left: 4px solid var(--warning-color);
+    border: 1px solid var(--gray-700);
+}
+
+.lesson-learned h3,
+.mvp-impact h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.lesson-learned p,
+.mvp-impact p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+/* ============================================
+   混合方案
+   ============================================ */
+.hybrid-solution {
+    margin-top: var(--spacing-lg);
+}
+
+.solution-concept {
+    background: var(--primary-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.solution-concept h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: var(--spacing-sm);
+}
+
+.solution-concept p {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.scenario-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.scenario-card {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-700);
+}
+
+.scenario-card.highlight {
+    border-color: var(--primary-color);
+    background: var(--bg-primary);
+}
+
+.scenario-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+}
+
+.tech-choice {
+    background: var(--bg-primary);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.tech-label {
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.tech-value {
+    color: var(--primary-light);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.reason, .implementation {
+    margin-top: var(--spacing-md);
+}
+
+.reason h4, .implementation h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-200);
+    margin-bottom: var(--spacing-sm);
+}
+
+.reason ul {
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+.reason li {
+    padding: var(--spacing-xs) 0;
+}
+
+.implementation p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+}
+
+.cost-benefit {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-700);
+}
+
+.cost-benefit h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.benefit-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-md);
+}
+
+.benefit-item {
+    background: var(--bg-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-700);
+    text-align: center;
+}
+
+.benefit-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.benefit-item p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+/* ============================================
+   WebRTC 架構對比表格
+   ============================================ */
+.webrtc-arch-table {
+    margin-top: var(--spacing-lg);
+}
+
+.arch-table-header,
+.arch-table-row {
+    display: grid;
+    grid-template-columns: 1.5fr repeat(3, 1fr);
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-xs);
+}
+
+.arch-table-header {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    border: 1px solid var(--gray-700);
+}
+
+.arch-table-header .header-item {
+    font-weight: 600;
+    color: var(--gray-50);
+    text-align: center;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.arch-table-header .header-item:first-child {
+    text-align: left;
+}
+
+.arch-table-header .header-item.highlight {
+    color: var(--primary-light);
+}
+
+.arch-table-row {
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--gray-700);
+    align-items: center;
+}
+
+.arch-table-row .row-label {
+    font-weight: 600;
+    color: var(--gray-300);
+    font-size: 0.875rem;
+}
+
+.arch-table-row .cell {
+    text-align: center;
+    color: var(--gray-400);
+    font-size: 0.8rem;
+    padding: var(--spacing-xs);
+}
+
+.arch-table-row .cell.highlight {
+    color: var(--primary-light);
+    font-weight: 600;
+}
+
+.arch-table-row .cell.good {
+    color: var(--success-color);
+    font-weight: 600;
+}
+
+.arch-table-row .cell.bad {
+    color: var(--error-color);
+    font-weight: 600;
+}
+
+.arch-table-row .cell.neutral {
+    color: var(--warning-color);
+    font-weight: 600;
+}
+
+.arch-conclusion {
+    margin-top: var(--spacing-xl);
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--primary-color);
+}
+
+.arch-conclusion h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.arch-conclusion p {
+    font-size: 0.875rem;
+    color: var(--gray-300);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+}
+
+.arch-conclusion p:last-child {
+    margin-bottom: 0;
+}
+
+.arch-diagram {
+    background: var(--bg-primary);
+    padding: var(--spacing-xl);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--gray-700);
+}
+
+.sfu-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xl);
+}
+
+.flow-item {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    min-width: 150px;
+    border: 2px solid var(--gray-700);
+}
+
+.flow-item h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.flow-item p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+.flow-arrow {
+    font-size: 2rem;
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.arch-advantages {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-700);
+}
+
+.arch-advantages h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.arch-advantages ul {
+    list-style: none;
+    color: var(--gray-400);
+    font-size: 0.875rem;
+}
+
+.arch-advantages li {
+    padding: var(--spacing-xs) 0;
+}
+
+/* ============================================
+   評估與建議
+   ============================================ */
+.evaluation-content {
+    margin-top: var(--spacing-lg);
+}
+
+.project-status {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-xl);
+    border: 1px solid var(--gray-700);
+}
+
+.evaluation-strategy {
+    margin: var(--spacing-xl) 0;
+}
+
+.evaluation-strategy h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.strategy-flow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.strategy-step {
+    flex: 1;
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-700);
+    position: relative;
+}
+
+.strategy-step .step-number {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32px;
+    height: 32px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.strategy-step .step-content h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+    margin-top: var(--spacing-sm);
+    text-align: center;
+}
+
+.strategy-step .step-content ul {
+    list-style: none;
+    font-size: 0.8rem;
+    color: var(--gray-400);
+}
+
+.strategy-step .step-content li {
+    padding: var(--spacing-xs) 0;
+    padding-left: var(--spacing-sm);
+    position: relative;
+}
+
+.strategy-step .step-content li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--primary-light);
+}
+
+.strategy-arrow {
+    color: var(--primary-light);
+    font-size: 1.5rem;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.when-to-replace {
+    margin-bottom: var(--spacing-xl);
+}
+
+.when-to-replace h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.replace-conditions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-md);
+}
+
+.condition-item {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    border: 2px solid var(--gray-700);
+    text-align: center;
+}
+
+.condition-item.bad {
+    border-color: var(--error-color);
+}
+
+.condition-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--error-color);
+    margin-bottom: var(--spacing-sm);
+}
+
+.condition-item p {
+    font-size: 0.8rem;
+    color: var(--gray-400);
+    line-height: 1.5;
+}
+
+.project-status h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-md);
+}
+
+.status-list {
+    list-style: none;
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+.status-list li {
+    padding: var(--spacing-xs) 0;
+}
+
+.recommendations {
+    margin-bottom: var(--spacing-xl);
+}
+
+.recommendations h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-lg);
+}
+
+.recommendation-card {
+    display: flex;
+    gap: var(--spacing-md);
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-md);
+    border: 2px solid var(--gray-700);
+    transition: all var(--transition-base);
+}
+
+.recommendation-card:hover {
+    background: var(--gray-700);
+    border-color: var(--primary-color);
+    transform: translateX(8px);
+}
+
+.rec-number {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+}
+
+.rec-content h4 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.rec-content p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+    line-height: 1.6;
+    margin-bottom: var(--spacing-sm);
+}
+
+.action-plan {
+    background: var(--bg-primary);
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-sm);
+    font-size: 0.75rem;
+    color: var(--gray-400);
+}
+
+.action-plan strong {
+    color: var(--primary-light);
+}
+
+.timeline {
+    background: var(--bg-tertiary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-700);
+}
+
+.timeline h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.timeline-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.timeline-item {
+    background: var(--bg-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-700);
+    text-align: center;
+}
+
+.timeline-period {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--primary-light);
+    margin-bottom: var(--spacing-sm);
+}
+
+.timeline-tasks p {
+    font-size: 0.875rem;
+    color: var(--gray-400);
+}
+
+.ai-impact {
+    margin-top: var(--spacing-xl);
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: var(--bg-tertiary);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--gray-700);
+}
+
+.ai-impact h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-lg);
+}
+
+.impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.impact-item {
+    background: var(--bg-primary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--gray-700);
+}
+
+.impact-item h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--gray-50);
+    margin-bottom: var(--spacing-sm);
+}
+
+.impact-item p {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+    line-height: 1.5;
+}
+
+.app-intro {
+    text-align: center;
+    margin-top: var(--spacing-xl);
+}
+
+.app-description {
+    font-size: 1.125rem;
+    color: var(--gray-300);
+    line-height: 1.8;
+    margin-bottom: var(--spacing-xl);
+}
+
+.qr-section {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-xl);
+}
+
+.qr-code {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+}
+
+.qr-code img {
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin: 0 auto;
+}
+
+.qr-label {
+    margin-top: var(--spacing-md);
+    font-size: 0.875rem;
+    color: var(--gray-700);
+    font-weight: 600;
+}
+
+/* ============================================
+   響應式設計
+   ============================================ */
+@media (max-width: 1024px) {
+    .cover .title {
+        font-size: 3rem;
+    }
+    
+    .slide-title {
+        font-size: 2rem;
+    }
+    
+    .features-circle,
+    .architecture-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .presentation-container {
+        padding: var(--spacing-sm);
+    }
+    
+    .slide {
+        padding: var(--spacing-md);
+    }
+    
+    .cover .title {
+        font-size: 2rem;
+    }
+    
+    .cover .subtitle {
+        font-size: 1rem;
+    }
+    
+    .slide-title {
+        font-size: 1.5rem;
+    }
+    
+    /* Tab 導航調整 */
+    .tab-navigation {
+        top: var(--spacing-xs);
+        padding: 4px;
+    }
+    
+    .tab-btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 0.75rem;
+    }
+    
+    /* 手機版導航調整 */
+    .navigation {
+        top: auto;
+        bottom: var(--spacing-sm);
+        right: 50%;
+        transform: translateX(50%);
+        flex-direction: row;
+    }
+    
+    .page-counter {
+        writing-mode: horizontal-tb;
+        text-orientation: initial;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .features-circle,
+    .architecture-grid,
+    .outcomes-circle,
+    .requirements-grid,
+    .tech-stack,
+    .decision-comparison,
+    .impact-grid,
+    .timeline-grid,
+    .scenario-grid,
+    .architecture-comparison,
+    .benefit-grid,
+    .cost-comparison-grid-two,
+    .saas-examples,
+    .replace-conditions {
+        grid-template-columns: 1fr;
+    }
+    
+    .strategy-flow {
+        flex-direction: column;
+    }
+    
+    .strategy-arrow {
+        transform: rotate(90deg);
+    }
+    
+    .arch-table-header,
+    .arch-table-row {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+    
+    .arch-table-header .header-item,
+    .arch-table-row .row-label,
+    .arch-table-row .cell {
+        text-align: left !important;
+    }
+    
+    .comparison-arrow {
+        transform: rotate(90deg);
+    }
+}
+
+/* ============================================
+   打印樣式
+   ============================================ */
+@media print {
+    body {
+        background: white;
+    }
+    
+    .navigation {
+        display: none;
+    }
+    
+    .slide {
+        page-break-after: always;
+        position: relative;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+    }
+}
