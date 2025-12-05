@@ -104,6 +104,7 @@ body {
     z-index: 1000;
     box-shadow: var(--shadow-lg);
     height: 56px;
+    overflow: hidden;
 }
 
 /* Tab 分組（左側） */
@@ -216,7 +217,7 @@ body {
 
 .nav-btn:hover {
     background: var(--primary-light);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .nav-btn:active {
@@ -230,13 +231,13 @@ body {
 }
 
 .page-counter {
-    font-size: 0.75rem;
+    font-size: 0.875rem;
     font-weight: 600;
     color: var(--gray-300);
     text-align: center;
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    padding: var(--spacing-sm) 0;
+    padding: 0 var(--spacing-md);
+    white-space: nowrap;
+    min-width: 60px;
 }
 
 /* ============================================
