@@ -1,0 +1,52 @@
+# Docker Compose 生產環境配置
+# 用於在伺服器上部署 Java 微服務
+
+version: '3.8'
+
+services:
+  jdemo-api:
+    image: registry.gitlab.com/your-project/jdemo:latest
+    container_name: jdemo-api
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # Spring Boot 配置
+      - SPRING_PROFILES_ACTIVE=prod
+      # JVM 調整
+      - JAVA_OPTS=-Xmx512m -Xms256m -XX:+UseG1GC
+      # 時區設定
+      - TZ=Asia/Taipei
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/hello?name=health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - jdemo-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # 可選：Nginx 反向代理
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: jdemo-nginx
+  #   restart: unless-stopped
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+  #     - ./nginx/ssl:/etc/nginx/ssl:ro
+  #   depends_on:
+  #     - jdemo-api
+  #   networks:
+  #     - jdemo-network
+
+networks:
+  jdemo-network:
+    driver: bridge

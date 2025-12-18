@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Java Spring Boot 微服務
+  jdemo-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jdemo-api
+    ports:
+      - "8080:8080"
+    environment:
+      # Spring Boot 配置
+      - SPRING_PROFILES_ACTIVE=prod
+      # JVM 參數調整
+      - JAVA_OPTS=-Xmx512m -Xms256m
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/hello?name=health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # 如果未來需要加入資料庫，可以這樣加：
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: jdemo-db
+  #   environment:
+  #     - POSTGRES_DB=jdemo
+  #     - POSTGRES_USER=admin
+  #     - POSTGRES_PASSWORD=password
+  #   ports:
+  #     - "5432:5432"
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+
+# volumes:
+#   postgres-data:

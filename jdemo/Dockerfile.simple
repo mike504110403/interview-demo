@@ -1,0 +1,30 @@
+# ==========================================
+# 簡單 Dockerfile - 使用本地建置的 JAR
+# 更快速且避免建置環境相容性問題
+# ==========================================
+
+FROM eclipse-temurin:17-jre
+
+# 設定工作目錄
+WORKDIR /app
+
+# 建立非 root 使用者（安全性最佳實踐）
+RUN groupadd -r spring && useradd -r -g spring spring
+
+# 從本地複製已建置的 JAR 檔案
+# 先以 root 身份複製文件，再修改權限
+COPY build/libs/*-SNAPSHOT.jar app.jar
+RUN chown spring:spring app.jar
+
+# 切換到 spring 使用者
+USER spring:spring
+
+# 暴露應用程式埠號
+EXPOSE 8080
+
+# 健康檢查（可選）
+HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/hello?name=health || exit 1
+
+# 啟動應用程式
+ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,0 +1,163 @@
+# GitLab CI/CD 配置檔案
+# 用於自動建置、測試、打包和部署 Spring Boot 應用程式
+
+stages:
+  - test          # 測試階段
+  - build         # 建置階段
+  - docker        # Docker 打包階段
+  - deploy        # 部署階段
+
+variables:
+  # Docker 映像檔設定
+  DOCKER_IMAGE: "registry.gitlab.com/$CI_PROJECT_PATH"
+  DOCKER_TAG: "$CI_COMMIT_REF_SLUG-$CI_COMMIT_SHORT_SHA"
+  # Java/Gradle 設定
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+  GRADLE_USER_HOME: "$CI_PROJECT_DIR/.gradle"
+
+# 快取設定（加速建置）
+cache:
+  key: "$CI_COMMIT_REF_SLUG"
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+# ==========================================
+# 階段 1: 單元測試
+# ==========================================
+test:
+  stage: test
+  image: gradle:8.14-jdk17
+  script:
+    - echo "🧪 執行單元測試..."
+    - ./gradlew test --no-daemon
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/TEST-*.xml
+    paths:
+      - build/reports/tests/test/
+  only:
+    - branches
+    - tags
+
+# ==========================================
+# 階段 2: 建置 JAR
+# ==========================================
+build:
+  stage: build
+  image: gradle:8.14-jdk17
+  script:
+    - echo "🔨 建置應用程式..."
+    - ./gradlew clean build -x test --no-daemon
+    - echo "✅ 建置完成"
+    - ls -lh build/libs/
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 day
+  only:
+    - branches
+    - tags
+
+# ==========================================
+# 階段 3: 打包 Docker 映像檔
+# ==========================================
+docker:
+  stage: docker
+  image: docker:latest
+  services:
+    - docker:dind
+  dependencies:
+    - build
+  before_script:
+    - echo "🔐 登入 GitLab Container Registry..."
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "🐳 建置 Docker 映像檔..."
+    - docker build -f Dockerfile.simple -t $DOCKER_IMAGE:$DOCKER_TAG .
+    - docker tag $DOCKER_IMAGE:$DOCKER_TAG $DOCKER_IMAGE:latest
+    - echo "📤 推送映像檔到 Registry..."
+    - docker push $DOCKER_IMAGE:$DOCKER_TAG
+    - docker push $DOCKER_IMAGE:latest
+    - echo "✅ Docker 映像檔已推送"
+    - echo "映像檔: $DOCKER_IMAGE:$DOCKER_TAG"
+  only:
+    - main
+    - master
+    - develop
+    - tags
+
+# ==========================================
+# 階段 4: 部署到開發環境
+# ==========================================
+deploy:dev:
+  stage: deploy
+  image: alpine:latest
+  dependencies: []
+  before_script:
+    - apk add --no-cache openssh-client curl
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $DEV_SERVER_HOST >> ~/.ssh/known_hosts
+  script:
+    - echo "🚀 部署到開發環境..."
+    - |
+      ssh $DEV_SERVER_USER@$DEV_SERVER_HOST << 'EOF'
+        cd /opt/jdemo
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        docker-compose pull
+        docker-compose up -d
+        echo "✅ 部署完成"
+      EOF
+  environment:
+    name: development
+    url: http://$DEV_SERVER_HOST:8080
+  only:
+    - develop
+  when: manual
+
+# ==========================================
+# 階段 5: 部署到生產環境
+# ==========================================
+deploy:prod:
+  stage: deploy
+  image: alpine:latest
+  dependencies: []
+  before_script:
+    - apk add --no-cache openssh-client curl
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -H $PROD_SERVER_HOST >> ~/.ssh/known_hosts
+  script:
+    - echo "🚀 部署到生產環境..."
+    - |
+      ssh $PROD_SERVER_USER@$PROD_SERVER_HOST << 'EOF'
+        cd /opt/jdemo
+        docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+        docker-compose pull
+        docker-compose up -d
+        echo "✅ 部署完成"
+        
+        # 健康檢查
+        echo "⏳ 等待服務啟動..."
+        sleep 10
+        if curl -s http://localhost:8080/hello?name=healthcheck > /dev/null; then
+          echo "✅ 健康檢查通過"
+        else
+          echo "⚠️ 健康檢查失敗"
+          exit 1
+        fi
+      EOF
+  environment:
+    name: production
+    url: https://your-domain.com
+  only:
+    - main
+    - master
+    - tags
+  when: manual
