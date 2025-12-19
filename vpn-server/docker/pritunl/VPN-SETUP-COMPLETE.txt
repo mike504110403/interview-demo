@@ -1,0 +1,170 @@
+═══════════════════════════════════════════════
+  ✅✅✅ VPN 伺服器設置完成 ✅✅✅
+═══════════════════════════════════════════════
+
+🎯 設置摘要
+
+1. ✅ dnsmasq DNS 伺服器
+   - IP: 172.25.0.2
+   - 域名解析: test.dev → 119.8.53.204
+   - Web GUI: http://localhost:5380
+
+2. ✅ Pritunl VPN 伺服器
+   - 狀態: Online
+   - 端口: 11009/udp
+   - 虛擬網絡: 192.168.219.0/24
+   - DNS Server: 172.25.0.2 (指向 dnsmasq)
+   - Web GUI: https://localhost:9700
+
+3. ✅ 路由設定
+   - 0.0.0.0/0 (全流量)
+   - 192.168.219.0/24 (虛擬網絡)
+   - 119.8.53.204/32 (測試目標)
+   - 172.25.0.2/32 (DNS Server)
+
+4. ✅ 用戶已創建
+   - 組織: test
+   - 用戶: test
+   - 配置文件已下載: ~/Downloads/*.tar
+
+═══════════════════════════════════════════════
+
+🧪 測試 VPN 連接
+
+## 步驟 1：安裝 OpenVPN 客戶端
+
+**Mac:**
+```bash
+brew install --cask tunnelblick
+# 或
+brew install openvpn
+```
+
+**Tunnelblick (推薦 Mac 用戶):**
+- 下載: https://tunnelblick.net/downloads.html
+- 雙擊 .ovpn 文件導入配置
+
+**命令行方式:**
+```bash
+cd ~/Downloads
+# 解壓配置文件 (如果尚未解壓)
+tar -xf *.tar
+
+# 連接 VPN (需要 root 權限)
+sudo openvpn --config Test-VPN-Server_test.ovpn
+```
+
+## 步驟 2：測試 DNS 解析
+
+**連接 VPN 後，測試 DNS:**
+```bash
+# 測試自訂域名解析
+nslookup test.dev
+# 應該返回: 119.8.53.204
+
+ping test.dev
+# 應該能 ping 通 119.8.53.204
+```
+
+## 步驟 3：驗證 VPN 連接
+
+```bash
+# 檢查 IP 地址
+ifconfig | grep 192.168.219
+# 應該看到 VPN 虛擬網卡，IP 在 192.168.219.x 範圍內
+
+# 檢查 DNS 設定
+scutil --dns | grep 172.25.0.2
+# 應該看到 DNS Server 為 172.25.0.2
+
+# 測試連接到 VPN Server
+ping 192.168.219.1
+```
+
+═══════════════════════════════════════════════
+
+📝 配置管理
+
+## 查看 Pritunl 登入資訊
+cat /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl/FINAL-LOGIN.txt
+
+## 啟動/停止服務
+```bash
+cd /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl
+
+# 啟動
+docker-compose up -d
+
+# 停止
+docker-compose down
+
+# 重啟
+docker-compose restart
+
+# 查看日誌
+docker-compose logs -f pritunl
+docker-compose logs -f dnsmasq
+```
+
+## 添加更多域名解析
+
+編輯 dnsmasq.conf:
+```bash
+nano /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl/dnsmasq.conf
+
+# 添加新域名
+address=/your-domain.dev/1.2.3.4
+
+# 重啟 dnsmasq
+docker-compose restart dnsmasq
+```
+
+═══════════════════════════════════════════════
+
+🔧 故障排除
+
+## DNS 解析不工作
+
+1. 檢查 dnsmasq 狀態:
+   ```bash
+   docker logs pritunl-dns
+   docker exec pritunl-dns nslookup test.dev 127.0.0.1
+   ```
+
+2. 確認 VPN 客戶端使用正確的 DNS:
+   ```bash
+   scutil --dns
+   ```
+
+3. 測試從 Docker 網絡內解析:
+   ```bash
+   docker run --rm --network pritunl_pritunl-network busybox nslookup test.dev 172.25.0.2
+   ```
+
+## VPN 連接失敗
+
+1. 檢查 Pritunl 狀態:
+   ```bash
+   docker logs pritunl --tail=50
+   ```
+
+2. 確認端口開放:
+   ```bash
+   netstat -an | grep 11009
+   ```
+
+3. 檢查防火牆設定
+
+═══════════════════════════════════════════════
+
+🎉 完成！
+
+VPN Server 和 DNS 解析已完全設置完成。
+現在可以使用本機測試連接，驗證 DNS 解析功能。
+
+下一步：
+1. 使用 OpenVPN 客戶端連接到 VPN
+2. 測試 test.dev 域名解析
+3. 如需額外測試，可使用另一個設備連接
+
+═══════════════════════════════════════════════

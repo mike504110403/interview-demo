@@ -1,0 +1,91 @@
+version: "3.8"
+
+services:
+  # DNS Server (dnsmasq)
+  dnsmasq:
+    image: jpillora/dnsmasq:latest
+    container_name: pritunl-dns
+    ports:
+      - "5380:8080"  # Web GUI
+    volumes:
+      - ./dnsmasq.conf:/etc/dnsmasq.conf:ro
+    restart: unless-stopped
+    networks:
+      pritunl-network:
+        ipv4_address: 172.25.0.2
+    healthcheck:
+      test: ["CMD", "sh", "-c", "pgrep dnsmasq"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # MongoDB
+  mongodb:
+    image: mongo:4.4
+    container_name: pritunl-mongodb
+    volumes:
+      - mongodb-data:/data/db
+    restart: unless-stopped
+    networks:
+      pritunl-network:
+        ipv4_address: 172.25.0.3
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Pritunl VPN Server
+  pritunl:
+    image: ghcr.io/jippi/docker-pritunl:latest
+    platform: linux/amd64
+    container_name: pritunl
+    depends_on:
+      - mongodb
+      - dnsmasq
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv6.conf.all.disable_ipv6=0
+    ports:
+      - "9700:443"       # Web GUI (HTTPS)
+      - "11009:11009/udp"  # OpenVPN Server Port
+      - "1194:1194/udp"  # OpenVPN Default Port (備用)
+      - "1194:1194/tcp"  # OpenVPN TCP Port (備用)
+    environment:
+      PRITUNL_MONGODB_URI: "mongodb://mongodb:27017/pritunl"
+      REVERSE_PROXY: "false"
+    volumes:
+      - pritunl-data:/var/lib/pritunl
+    restart: unless-stopped
+    networks:
+      pritunl-network:
+        ipv4_address: 172.25.0.4
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-k", "https://localhost/check"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+
+networks:
+  pritunl-network:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-pritunl
+    enable_ipv6: false
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
+
+volumes:
+  mongodb-data:
+    driver: local
+  pritunl-data:
+    driver: local

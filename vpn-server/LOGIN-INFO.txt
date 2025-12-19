@@ -1,0 +1,34 @@
+═══════════════════════════════════════════
+  Pritunl (OpenVPN) 登入資訊
+═══════════════════════════════════════════
+
+🌐 GUI
+   https://localhost:9700
+
+🔑 Setup Key
+   a61c163398284cf284b7e5f74960515d
+
+👤 登入
+   Username: pritunl
+   Password: (執行以下命令獲取)
+   
+   cd vpn-server/docker/pritunl
+   docker-compose exec pritunl pritunl default-password
+
+📝 關於 Setup Key 固定設定
+   Setup Key 無法直接在 docker-compose.yml 中預設
+   每次重新部署會生成新的 Setup Key
+   如需固定配置，請：
+   1. 首次設定完成後
+   2. 掛載 /var/lib/pritunl 持久化
+   3. 或使用 API 自動化設定
+
+🌐 DNS 配置（在 Pritunl GUI 中）
+   Server Settings → DNS Servers:
+   - test.dev → 119.8.53.204
+   - 可手動添加其他內部域名
+
+✅ 部署狀態
+   MongoDB: 4.4 (ARM64 原生)
+   Pritunl: latest
+   WireGuard: 已移除

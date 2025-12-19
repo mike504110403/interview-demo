@@ -1,0 +1,35 @@
+═══════════════════════════════════════════
+  ✅ Pritunl (OpenVPN) 成功啟動
+═══════════════════════════════════════════
+
+🌐 GUI
+   https://localhost:9700
+
+🔑 Setup Key
+   5460bc5322c44ed4ac38b456a07727ff
+
+👤 登入帳號
+   Username: pritunl
+   Password: 請執行命令獲取
+   
+   cd /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl
+   docker-compose exec pritunl pritunl default-password
+
+📋 運行狀態
+   ✅ Pritunl: 正常運行
+   ✅ MongoDB 4.4: 正常運行 (ARM64 原生)
+   ❌ DNS: 已移除（掛載問題）
+
+🌐 DNS 解析設定（在 Pritunl GUI 中手動配置）
+   進入 Server Settings → DNS Servers
+   添加自訂 DNS 或直接在 Routes 中配置：
+   - test.dev → 119.8.53.204
+
+💡 關於 Setup Key
+   Setup Key 無法在 docker-compose.yml 中預設
+   每次清空 Volume 會重新生成
+   如需持久化：保留 pritunl-data volume
+
+🔧 使用的鏡像版本
+   - MongoDB: 4.4 (ARM64)
+   - Pritunl: latest (x86_64 emulated)

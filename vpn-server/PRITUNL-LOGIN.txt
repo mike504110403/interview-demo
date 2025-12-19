@@ -1,0 +1,23 @@
+═══════════════════════════════════════════
+  Pritunl (OpenVPN) 登入資訊
+═══════════════════════════════════════════
+
+🌐 GUI
+   https://localhost:9700
+
+🔑 Setup Key
+   bab73886fb0a4e57a1466dfc423797d8
+
+👤 登入
+   Username: pritunl
+   Password: (執行以下命令獲取)
+   
+   cd /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl
+   docker-compose exec pritunl pritunl default-password
+
+📋 DNS 配置（手動）
+   test.dev → 119.8.53.204
+   (在 Pritunl Server 設定中指定 DNS)
+
+✅ WireGuard 已完全移除
+   只保留 OpenVPN (Pritunl)

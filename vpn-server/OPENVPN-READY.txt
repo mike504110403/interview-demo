@@ -1,0 +1,29 @@
+═══════════════════════════════════════════
+  OpenVPN (Pritunl) 部署完成
+═══════════════════════════════════════════
+
+🌐 Web GUI
+   https://localhost:9700
+   
+⚠️  會看到 SSL 警告，點擊「繼續」
+
+🔑 登入步驟
+   1. 輸入 Setup Key（見終端輸出）
+   2. Username: pritunl
+   3. Password:（見終端輸出）
+
+📋 DNS 已配置
+   test.dev → 119.8.53.204
+
+📁 專案位置
+   /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl
+
+🔧 管理命令
+   cd /Users/mike/Documents/self/interview-demo/vpn-server/docker/pritunl
+   docker-compose ps       # 查看狀態
+   docker-compose logs -f  # 查看日誌
+   docker-compose restart  # 重啟
+   docker-compose down     # 停止
+
+✅ WireGuard 已移除
+   只保留 OpenVPN (Pritunl)
