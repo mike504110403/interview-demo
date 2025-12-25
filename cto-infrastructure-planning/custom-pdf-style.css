@@ -1,0 +1,276 @@
+/* 階段性伺服器採購計劃 - PDF 專用樣式 */
+
+/* 基礎排版 */
+body {
+    font-family: 'Microsoft YaHei', '微軟正黑體', 'Noto Sans TC', sans-serif;
+    line-height: 1.8;
+    padding: 40px 50px;
+    margin: 0;
+    color: #333;
+    font-size: 11pt;
+}
+
+/* 主標題 */
+h1 {
+    font-size: 22pt;
+    font-weight: bold;
+    color: #1a1a1a;
+    border-bottom: 3px solid #2c3e50;
+    padding-bottom: 12px;
+    margin-top: 0;
+    margin-bottom: 25px;
+    page-break-after: avoid;
+}
+
+/* 章節標題 */
+h2 {
+    font-size: 15pt;
+    font-weight: bold;
+    color: #2c3e50;
+    border-bottom: 2px solid #95a5a6;
+    padding-bottom: 6px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    page-break-after: avoid;
+}
+
+/* 小節標題 */
+h3 {
+    font-size: 12pt;
+    font-weight: bold;
+    color: #34495e;
+    margin-top: 18px;
+    margin-bottom: 10px;
+    page-break-after: avoid;
+}
+
+/* 段落 */
+p {
+    margin: 8px 0;
+    text-align: justify;
+}
+
+/* 粗體 */
+strong {
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+/* 表格樣式 */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0 15px 0;
+    font-size: 9.5pt;
+    page-break-inside: auto;
+}
+
+/* 表格行 - 避免跨頁分割 */
+tr {
+    page-break-inside: avoid;
+    page-break-after: auto;
+}
+
+/* 表格標題行 */
+th {
+    background-color: #34495e;
+    color: white;
+    font-weight: bold;
+    padding: 6px 5px;
+    text-align: left;
+    border: 1px solid #2c3e50;
+}
+
+/* 表格內容 */
+td {
+    padding: 5px 5px;
+    border: 1px solid #bdc3c7;
+    vertical-align: top;
+}
+
+/* 表格斑馬紋 */
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: white;
+}
+
+/* 表格 hover 效果（PDF 中不適用，但保留給預覽用）*/
+tbody tr:hover {
+    background-color: #e8f4f8;
+}
+
+/* 甘特圖表格特殊樣式 */
+table:has(td:first-child:contains("階段")) {
+    font-size: 8.5pt;
+}
+
+/* 列表 */
+ul, ol {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+li {
+    margin: 5px 0;
+    line-height: 1.6;
+}
+
+/* 引用區塊 */
+blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 15px;
+    margin: 15px 0;
+    color: #555;
+    font-style: italic;
+    background-color: #f8f9fa;
+    padding: 10px 15px;
+}
+
+/* 水平分隔線 */
+hr {
+    border: none;
+    border-top: 2px solid #bdc3c7;
+    margin: 25px 0;
+}
+
+/* 分頁提示（保留在 HTML 中，打印時會隱藏文字）*/
+p:has(em:contains("以下內容分頁")) {
+    page-break-after: always;
+    text-align: center;
+    color: #95a5a6;
+    font-style: italic;
+    margin: 30px 0;
+}
+
+/* 強制分頁 */
+.page-break {
+    page-break-after: always;
+}
+
+/* 避免分頁 */
+.keep-together {
+    page-break-inside: avoid;
+}
+
+/* 關鍵資訊框 */
+.info-box {
+    background-color: #e3f2fd;
+    border-left: 4px solid #2196f3;
+    padding: 12px 15px;
+    margin: 15px 0;
+    page-break-inside: avoid;
+}
+
+/* 警告框 */
+.warning-box {
+    background-color: #fff3cd;
+    border-left: 4px solid #ffc107;
+    padding: 12px 15px;
+    margin: 15px 0;
+    page-break-inside: avoid;
+}
+
+/* 成功框 */
+.success-box {
+    background-color: #d4edda;
+    border-left: 4px solid #28a745;
+    padding: 12px 15px;
+    margin: 15px 0;
+    page-break-inside: avoid;
+}
+
+/* 程式碼區塊（如果有）*/
+pre {
+    background: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 12px;
+    overflow-x: auto;
+    font-size: 9pt;
+    page-break-inside: avoid;
+}
+
+code {
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    background: #f5f5f5;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 9.5pt;
+}
+
+/* 文檔元資訊（提報人、日期等）*/
+p:has(strong:contains("提報人")) {
+    font-size: 11pt;
+    margin: 5px 0;
+    line-height: 1.8;
+}
+
+/* 圖例說明特殊格式 */
+p:has(strong:contains("圖例說明")) {
+    margin-top: 10px;
+    font-size: 9.5pt;
+    color: #666;
+    line-height: 1.6;
+}
+
+/* 打印專用設定 */
+@media print {
+    body {
+        font-size: 10pt;
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 20pt;
+    }
+    
+    h2 {
+        font-size: 14pt;
+    }
+    
+    h3 {
+        font-size: 11pt;
+    }
+    
+    /* 確保表格不會被切割 */
+    table {
+        page-break-inside: auto;
+    }
+    
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+    
+    thead {
+        display: table-header-group;
+    }
+    
+    /* 避免標題單獨在頁面底部 */
+    h1, h2, h3 {
+        page-break-after: avoid;
+    }
+}
+
+/* 附件區塊樣式 */
+h2:contains("附件") {
+    margin-top: 40px;
+    border-top: 3px double #95a5a6;
+    padding-top: 15px;
+}
+
+/* 甘特圖符號統一大小 */
+table td {
+    font-family: 'Microsoft YaHei', 'Arial Unicode MS', sans-serif;
+}
+
+/* 確保甘特圖符號對齊 */
+table:has(th:contains("月")) td {
+    text-align: center;
+    font-size: 9pt;
+    padding: 4px 3px;
+}
+
