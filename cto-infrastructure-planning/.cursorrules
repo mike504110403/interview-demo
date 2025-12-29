@@ -113,16 +113,27 @@ estimated_growth:
 
 ```yaml
 gt_proposal:
-  spec: "伺服器級別主機"
+  spec:
+    cpu: "100核心"
+    memory: "300GB"
+    storage: "5TB"
   price_per_unit: "40萬 TWD"
   quantity: 3
   total: "120萬 TWD"
   rationale: "高可用架構（3節點，任一故障不影響服務）"
   
+  # 可能的硬體配置（推測）
+  possible_config:
+    cpu_option_1: "2× AMD EPYC 7713 (64核×2=128核，可能降頻到100核)"
+    cpu_option_2: "2× AMD EPYC 7643 (48核×2=96核)"
+    cpu_option_3: "2× Intel Xeon Platinum 8360Y (36核×2=72核+超線程=144線程)"
+    note: "100核可能指物理核心或邏輯線程，需確認"
+  
 concerns:
-  - "初期投入過大"
+  - "初期投入過大（120萬）"
   - "預算難一次到位"
   - "是否過度設計？"
+  - "100核配置是否必要？"
 ```
 
 ## 團隊能力評估
